@@ -65,12 +65,12 @@
         break;
       }
       case "leftout": {
-        alert(number.shift(number[number.length - 1]));
+        alert(number.shift());
         show();
         break;
       }
       case "rightout": {
-        alert(number.pop(number[0]));
+        alert(number.pop());
         show();
         break;
       }
@@ -82,7 +82,7 @@
     var target = e.target;
     if (target.nodeName != "li") return;
     var id = parseInt(target.getAttribute("id"));
-    number.splice(id, 1); // 删除元素，1: 删除一个元素
+    number.splice(id, 1);
     show();
     return number;
   })
