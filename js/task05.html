@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>IFE JavaScript Task 05</title>
+  <style>
+    #btns {
+      display: inline-block;
+    }
+    
+    ul {
+      list-style: none;
+      padding-left: 0;
+      display: flex;
+      justify-content: center;
+      align-content: flex-end;
+      align-items: flex-end;
+    }
+    
+    li {
+      background-color: red;
+      display: inline-block;
+      width: 20px;
+      margin-right: 3px;
+      color: #ffffff;
+      text-align: center;
+      vertical-align: bottom;
+    }
+  </style>
+</head>
+
+<body>
+  <input id="input" type="text" />
+  <div id="btns">
+    <button id="leftin">左侧入</button>
+    <button id="rightin">右侧入</button>
+    <button id="leftout">左侧出</button>
+    <button id="rightout">右侧出</button>
+    <button id="genrandom">生成一组随机数</button>
+    <button id="sort">冒泡排序</button>
+  </div>
+  <ul id="result">
+  </ul>
+  <script>
+    var $ = function (id) {
+      return document.getElementById(id);
+    }
+
+    // 队列
+    var number = [];
+
+    // 按钮点击事件
+    $("btns").addEventListener("click", function (e) {
+      var target = e.target,
+        value = $("input").value;
+      $("input").value = "";
+      switch (target.id) {
+        case "leftin":
+          {
+            if (value < 10 || value > 100 || isNaN(value)) {
+              alert("请输入10-100之间的数字");
+              return;
+            }
+            if (number.length >= 60) {
+              alert("队列元素数量最多限制为60个");
+              return;
+            } else {
+              number.unshift(value);
+              show();
+            }
+            break;
+          }
+        case "rightin":
+          {
+            if (value < 10 || value > 100 || isNaN(value)) {
+              alert("请输入10-100之间的数字");
+              return;
+            }
+            if (number.length >= 60) {
+              alert("队列元素数量最多限制为60个");
+              return;
+            } else {
+              number.push(value);
+              show();
+            }
+            break;
+          }
+        case "leftout":
+          {
+            alert(number.shift());
+            show();
+            break;
+          }
+        case "rightout":
+          {
+            alert(number.pop());
+            show();
+            break;
+          }
+        case "genrandom":
+          {
+            number = [];
+            for (var i = 0; i < 60; i++) {
+              number[i] = parseInt(Math.random() * 90 + 10);
+            }
+            show();
+            break;
+          }
+        case "sort":
+          {
+            var time = null,
+              i = 0,
+              j = 1;
+            time = setInterval(function () {
+              if (i < number.length) {
+                if (j < number.length) {
+                  if (number[i] > number[j]) {
+                    var temp = number[i];
+                    number[i] = number[j];
+                    number[j] = temp;
+                    show();
+                  }
+                  j++;
+                } else {
+                  i++;
+                  j = i + 1;
+                }
+              } else {
+                clearInterval(time);
+                return;
+              }
+            }, 3);
+
+            // for (var i = 0; i < number.length; i++) {
+            //   for (var j = i + 1; j < number.length; j++) {
+            //     if (number[i] > number[j]) {
+            //       var temp = number[i];
+            //       number[i] = number[j];
+            //       number[j] = temp;
+            //     }
+            //   }
+            // }
+            break;
+          }
+      }
+    })
+
+    // 队列元素点击事件
+    $("result").addEventListener("click", function (e) {
+      var target = e.target;
+      if (target.nodeName != "li") return;
+      var id = parseInt(target.getAttribute("id"));
+      number.splice(id, 1);
+      show();
+      return number;
+    })
+
+    // 显示队列元素
+    function show() {
+      var content = " ";
+      for (var i = 0; i < number.length; i++) {
+        content += "<li id='" + i + "' style='height: " + number[i] * 2 + "px'>" + number[i] + "</li>";
+      }
+      result.innerHTML = content;
+    }
+  </script>
+</body>
+
+</html>
