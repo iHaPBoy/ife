@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>IFE JavaScript Task 06</title>
+  <style>
+    #btns {
+      display: inline-block;
+    }
+    
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    
+    li {
+      border: 1px solid deepskyblue;
+      color: deepskyblue;
+      display: inline-block;
+      line-height: 2.2em;
+      padding: 0 14px;
+      margin-right: 16px;
+      border-radius: 80px;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    li span {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <textarea name="input" id="input" cols="30" rows="5"></textarea>
+  <br><input type="text" id="keyword"> <button id="search">查找</button>
+  <ul id="result"></ul>
+  <script>
+    var $ = function (id) {
+      return document.getElementById(id);
+    }
+
+    var tags = [];
+
+    // 按钮点击事件
+    $("input").addEventListener("keyup", function (e) {
+      var value = e.target.value;
+      tags = value.split(/[,，；;、.。‘“：:'\s\n]+/);
+      tags = tags.filter(function (n) {
+        return n
+      });
+      console.log(tags);
+      show();
+    })
+
+    // 显示队列元素
+    function show() {
+      var content = " ";
+      for (var i = 0; i < tags.length; i++) {
+        content += "<li id='" + i + "'>" + tags[i] + "</li>";
+      }
+      result.innerHTML = content;
+    }
+
+    // 查找
+    $("search").addEventListener("click", function (e) {
+      var searchValue = $("keyword").value.trim();
+      tags.forEach(function (value, index, array) {
+        var Reg = new RegExp(searchValue, "g");
+        var temp = `<span>${searchValue}</span>`
+        $(index).innerHTML = value.replace(Reg, temp);
+      });
+    })
+
+    // 搜索框回车事件
+    $("keyword").addEventListener("keypress", function (event) {
+      if (event.keyCode == "13") {
+        $("search").click()
+      }
+    })
+  </script>
+</body>
+
+</html>
