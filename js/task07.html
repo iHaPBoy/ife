@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>IFE JavaScript Task 07</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		
+		#root {
+			width: 600px;
+			margin: 40px auto;
+		}
+
+	  #root, #root div {
+			border-radius: 10px;
+			border: 1px solid #999;
+		}
+
+	  #root div {
+			margin: 10px;
+		}
+		
+		.child1 {
+			display: flex;
+		}
+		
+		.child2 {
+			display: flex;
+			flex: 1;
+		}
+		
+		.child3 {
+			height: 60px;
+			display: flex;
+			flex: 1;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#buttons {
+			text-align: center;
+		}
+		
+		.clearfix::after {
+			content: "";
+			display: block;
+			clear: both;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="root">
+		<div class="child1">
+			<div class="child2">
+				<div class="child3">Left</div>
+				<div class="child3">Right</div>
+			</div>
+			<div class="child2">
+				<div class="child3">Left</div>
+				<div class="child3">Right</div>
+			</div>
+		</div>
+		<div class="child1">
+			<div class="child2">
+				<div class="child3">Left</div>
+				<div class="child3">Right</div>
+			</div>
+			<div class="child2">
+				<div class="child3">Left</div>
+				<div class="child3">Right</div>
+			</div>
+		</div>
+	</div>
+	<div id="buttons">
+		<button>先序遍历</button>
+		<button>中序遍历</button>
+		<button>后序遍历</button>
+	</div>
+</body>
+
+</html>
