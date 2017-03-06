@@ -12,27 +12,34 @@
 			padding: 0;
 		}
 		
+		div {
+			color: deepskyblue;
+		}
+		
 		#root {
 			width: 600px;
 			margin: 40px auto;
 		}
-
-	  #root, #root div {
+		
+		#root,
+		#root div {
 			border-radius: 10px;
-			border: 1px solid #999;
+			border: 1px solid deepskyblue;
 		}
-
-	  #root div {
+		
+		#root div {
 			margin: 10px;
 		}
 		
 		.child1 {
 			display: flex;
+			background-color: #fff;
 		}
 		
 		.child2 {
 			display: flex;
 			flex: 1;
+			background-color: #fff;
 		}
 		
 		.child3 {
@@ -41,8 +48,9 @@
 			flex: 1;
 			align-items: center;
 			justify-content: center;
+			background-color: #fff;
 		}
-
+		
 		#buttons {
 			text-align: center;
 		}
@@ -51,6 +59,35 @@
 			content: "";
 			display: block;
 			clear: both;
+		}
+		
+		.normal {
+			background-color: #fff;
+			color: deepskyblue;
+		}
+		
+		.animate {
+			background-color: deepskyblue;
+			transition: all ease 1s;
+			color: #fff;
+		}
+		
+		#buttons button {
+			border: 1px solid deepskyblue;
+			border-radius: 40px;
+			line-height: 2.8em;
+			padding: 0 20px;
+			background-color: #fff;
+			color: deepskyblue;
+			outline: none;
+			cursor: pointer;
+			margin: 0 10px;
+		}
+		
+		#buttons button:hover {
+			border: 1px solid deepskyblue;
+			background-color: deepskyblue;
+			color: #fff;
 		}
 	</style>
 </head>
@@ -79,10 +116,91 @@
 		</div>
 	</div>
 	<div id="buttons">
-		<button>先序遍历</button>
-		<button>中序遍历</button>
-		<button>后序遍历</button>
+		<button id="preOrder">先序遍历</button>
+		<button id="inOrder">中序遍历</button>
+		<button id="postOrder">后序遍历</button>
 	</div>
+	<script type="text/javascript">
+		var $ = function (id) {
+			return document.getElementById(id);
+		}
+
+		var treeList = [];
+		var root = $('root');
+		var buttons = $('buttons');
+		var timer = null;
+
+		// 按钮点击事件
+		buttons.addEventListener("click", function (event) {
+			var target = event.target;
+			reset();
+			switch (target.id) {
+				case "preOrder":
+					preOrder(root);
+					break;
+				case "inOrder":
+					inOrder(root);
+					break;
+				case "postOrder":
+					postOrder(root);
+					break;
+				default:
+					break;
+			}
+			console.log(treeList);
+			addStyle();
+		});
+
+		// 重置
+		function reset() {
+			clearInterval(timer);
+			treeList.forEach(function (e) {
+				e.className = e.className.replace(/normal|animate/, "");
+			});
+			treeList = [];
+		}
+
+		// 添加动画
+		function addStyle() {
+			var i = 0;
+			treeList[i].classList.add("animate");
+			timer = setInterval(function () {
+				i++;
+				if (i < treeList.length) {
+					treeList[i - 1].className = treeList[i - 1].className.replace(/animate/, "normal");
+					treeList[i].classList.add("animate");
+				} else {
+					clearInterval(timer);
+					treeList[i - 1].className = treeList[i - 1].className.replace(/animate/, "normal");
+				}
+			}, 1000);
+		}
+
+		// 先序遍历
+		function preOrder(node) {
+			if (node != null) {
+				treeList.push(node);
+				preOrder(node.firstElementChild);
+				preOrder(node.lastElementChild);
+			}
+		}
+		// 中序遍历
+		function inOrder(node) {
+			if (node != null) {
+				inOrder(node.firstElementChild);
+				treeList.push(node);
+				inOrder(node.lastElementChild);
+			}
+		}
+		// 后序遍历
+		function postOrder(node) {
+			if (node != null) {
+				postOrder(node.firstElementChild);
+				postOrder(node.lastElementChild);
+				treeList.push(node);
+			}
+		}
+	</script>
 </body>
 
 </html>
